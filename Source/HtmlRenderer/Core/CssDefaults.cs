@@ -107,8 +107,8 @@ namespace TheArtOfDev.HtmlRenderer.Core
 
         /* Not in the specification but necessary */
         a               { color: #0055BB; text-decoration:underline }
-        table           { border-color:#dfdfdf; }
-        td, th          { border-color:#dfdfdf; overflow: hidden; }
+        table           { border-color:#000000; }
+        td, th          { border-color:#000000; overflow: hidden; }
         style, title,
         script, link,
         meta, area,

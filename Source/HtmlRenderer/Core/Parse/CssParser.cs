@@ -489,6 +489,10 @@ namespace TheArtOfDev.HtmlRenderer.Core.Parse
             {
                 ParsePaddingProperty(propValue, properties);
             }
+            else if (propName == "background")
+            {
+                ParseBackgroundProperty(propValue, properties);
+            }
             else if (propName == "background-image")
             {
                 properties["background-image"] = ParseImageProperty(propValue);
@@ -680,6 +684,44 @@ namespace TheArtOfDev.HtmlRenderer.Core.Parse
                 if (borderColor != null)
                     ParseBorderColorProperty(borderColor, properties);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propValue"></param>
+        /// <param name="properties"></param>
+        private void ParseBackgroundProperty(string propValue, Dictionary<string, string> properties)
+        {
+            string color, image, repeat, attachment, position;
+
+            ParseBackground(propValue, out color, out image, out repeat, out attachment, out position);
+
+            if (color != null)
+                ParseColorProperty("background-color", color, properties);
+            if (image != null)
+                properties["background-image"] = ParseImageProperty(image);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propValue"></param>
+        /// <param name="color"></param>
+        /// <param name="image"></param>
+        /// <param name="repeat"></param>
+        /// <param name="attachment"></param>
+        /// <param name="position"></param>
+        private void ParseBackground(string propValue, out string color, out string image, out string repeat, out string attachment, out string position)
+        {
+            color = image = repeat = attachment = position = null;
+
+            var values = SplitValues(propValue);
+            int idx = 0;
+            if (values.Length > 0 && _valueParser.IsColorValid(values[0]))
+                color = values[idx++];
+            if (values.Length > idx && values[idx].Trim().StartsWith("url("))
+                image = values[idx];
         }
 
         /// <summary>
